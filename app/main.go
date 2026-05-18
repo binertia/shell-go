@@ -5,6 +5,7 @@ import (
 	"bufio"
 	"os"
 	"strings"
+	"os/exec"
 )
 
 var _ = fmt.Print
@@ -30,10 +31,10 @@ func handleType(arrCmd []string) {
 		return
 	}
 
-	var totalCmd = []string{"echo","exit","type"}
+	var builtinCmd = []string{"echo","exit","type"}
 	for _, s1 := range arrCmd[1:] {
 		indicator := 0;
-		for _, s2 := range totalCmd {
+		for _, s2 := range builtinCmd {
 			if s1 == s2 {
 				fmt.Println(s1 + " is a shell builtin")
 				indicator++;
@@ -41,7 +42,12 @@ func handleType(arrCmd []string) {
 
 		}
 		if (indicator == 0) {
-			fmt.Println(s1 + ": not found")
+			path, err := exec.LookPath(s1)
+			if err != nil {
+				fmt.Println(s1 + ": not found")
+			} else {
+				fmt.Println(s1 + " is " + path)
+			}
 		}
 	}
 }
