@@ -11,11 +11,13 @@ import (
 var _ = fmt.Print
 
 func handleExecBin(arrCmd []string, command string) {
-	path, err := exec.LookPath(arrCmd[0])
+	// ::TODO:: will use this line below after finish for absolute path
+	// path, err := exec.LookPath(arrCmd[0])
+	_, err := exec.LookPath(arrCmd[0])
 	if err != nil {
 		fmt.Println(command + ": command not found")
 	} else {
-		// will use this line after finish project
+		// ::TODO:: will use this line after finish project
 		// cmd := exec.Command(path,arrCmd[1:]...)
 		cmd := exec.Command(arrCmd[0],arrCmd[1:]...)
 
