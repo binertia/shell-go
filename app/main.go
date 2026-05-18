@@ -17,10 +17,24 @@ func inputSplit(input string) []string {
 
 	inSingle := false
 	inDouble := false
+	escaped := false
 
 	for _, ch := range input {
 
+		if escaped {
+			current.WriteRune(ch)
+			escaped = false
+			continue
+		}
+
 		switch ch {
+
+		case '\\':
+			if inSingle {
+				current.WriteRune(ch)
+			} else {
+				escaped = true
+			}
 
 		case '\'':
 			if !inDouble {
@@ -28,11 +42,15 @@ func inputSplit(input string) []string {
 				continue
 			}
 
+			current.WriteRune(ch)
+
 		case '"':
 			if !inSingle {
 				inDouble = !inDouble
 				continue
 			}
+
+			current.WriteRune(ch)
 
 		case ' ':
 			if !inSingle && !inDouble {
@@ -44,9 +62,12 @@ func inputSplit(input string) []string {
 
 				continue
 			}
-		}
 
-		current.WriteRune(ch)
+			current.WriteRune(ch)
+
+		default:
+			current.WriteRune(ch)
+		}
 	}
 
 	if current.Len() > 0 {
