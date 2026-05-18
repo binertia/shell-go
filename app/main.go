@@ -18,14 +18,14 @@ func handleCommand(arrCmd []string, command string) {
 
 	//type cmd
 	case "type":
-		handleType(arrCmd, command)
+		handleType(arrCmd)
 
 	default:
 		fmt.Println(command + ": command not found")
 	}
 }
 
-func handleType(arrCmd []string, command string) {
+func handleType(arrCmd []string) {
 	if len(arrCmd) == 1 {
 		return
 	}
@@ -35,7 +35,7 @@ func handleType(arrCmd []string, command string) {
 		indicator := 0;
 		for _, s2 := range totalCmd {
 			if s1 == s2 {
-				fmt.Println(s1 + " is a shell buildin")
+				fmt.Println(s1 + " is a shell builtin")
 				indicator++;
 			}
 
