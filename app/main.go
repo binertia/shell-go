@@ -16,6 +16,8 @@ func handleExecBin(arrCmd []string, command string) {
 		fmt.Println(command + ": command not found")
 	} else {
 		cmd := exec.Command(path,arrCmd[1:]...)
+		cmd.Stdin = os.Stdin
+		cmd.Stdout = os.Stdout
 		cmd.Stderr = os.Stderr
 		err = cmd.Run()
 		if err != nil {
