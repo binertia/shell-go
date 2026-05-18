@@ -17,7 +17,6 @@ func main() {
 		command = strings.TrimSpace(command)
 		arrCmd := strings.Split(command, " ")
 		if  (len(arrCmd) > 0 && arrCmd[0] == "exit") {
-			fmt.Print("exit real")
 			os.Exit(0)
 		} else if err != nil {
 			fmt.Fprintln(os.Stderr, "Error reading input:", err)
