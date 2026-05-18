@@ -56,7 +56,7 @@ func handleCommand(arrCmd []string, command string) {
 
 func handleCd(arrCmd []string) {
 	//absolute path
-	if len(arrCmd) == 1 {
+	if (len(arrCmd) == 1) ||(len(arrCmd) == 2 && arrCmd[1] == "~") {
 		dir, err := os.UserHomeDir()
 		if err != nil {
 			fmt.Println("no home directory is set")
