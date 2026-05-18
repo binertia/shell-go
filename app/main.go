@@ -46,8 +46,30 @@ func handleCommand(arrCmd []string, command string) {
 	case "pwd":
 		handlePwd(arrCmd)
 
+	case "cd":
+		handleCd(arrCmd)
+
 	default:
 		handleExecBin(arrCmd, command)
+	}
+}
+
+func handleCd(arrCmd []string) {
+	//absolute path
+	if len(arrCmd) == 1 {
+		dir, err := os.UserHomeDir()
+		if err != nil {
+			fmt.Println("no home directory is set")
+			return
+		}
+		os.Chdir(dir)
+	} else {
+		_, err := os.Stat(arrCmd[1])
+		if err != nil {
+			fmt.Println("cd: " + arrCmd[1] + ": No such file or directory") //::TODO:: wip update
+			return
+		}
+		os.Chdir(arrCmd[1])
 	}
 }
 
