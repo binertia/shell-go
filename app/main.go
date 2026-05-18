@@ -9,6 +9,29 @@ import (
 
 var _ = fmt.Print
 
+func handleCommand(arrCmd []string, command string) {
+	// exit cmd
+	if arrCmd[0] == "echo" {
+
+		if len(arrCmd) == 1 {
+			fmt.Println("")
+		}
+
+		arrLen := len(arrCmd)
+
+		for i := 1; i < arrLen; i++ {
+			if i == arrLen-1 {
+				fmt.Println(arrCmd[i])
+			} else {
+				fmt.Print(arrCmd[i] + " ")
+			}
+		}
+
+	} else {
+		fmt.Println(command + ": command not found")
+	}
+}
+
 func main() {
 	readLine := bufio.NewReader(os.Stdin)
 	for {
@@ -23,24 +46,10 @@ func main() {
 		arrCmd := strings.Fields(command)
 
 		if len(arrCmd) > 0 {
-			// exit cmd
 			if arrCmd[0] == "exit" {
-				os.Exit(0)
-			} else if arrCmd[0] == "echo" {
-				if len(arrCmd) == 1 {
-					fmt.Println("")
-				}
-				arrLen := len(arrCmd)
-				for i := 1; i < arrLen;i++ {
-					if (i == arrLen -1){
-						fmt.Println(arrCmd[i])
-					} else {
-						fmt.Print(arrCmd[i] + " ")
-					}
-				}
-			} else {
-				fmt.Println(command + ": command not found")
+				break
 			}
+			handleCommand(arrCmd, command)
 		} else {
 		fmt.Print("")
 		}
