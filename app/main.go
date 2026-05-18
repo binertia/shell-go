@@ -14,14 +14,18 @@ func main() {
 	for {
 		fmt.Print("$ ")
 		command, err := readLine.ReadString('\n')
-		command = strings.TrimSpace(command)
-		arrCmd := strings.Split(command, " ")
-		if  (len(arrCmd) > 0 && arrCmd[0] == "exit") {
-			os.Exit(0)
-		} else if err != nil {
+		if err != nil {
 			fmt.Fprintln(os.Stderr, "Error reading input:", err)
 			os.Exit(1)
 		} 
+
+		command = strings.TrimSpace(command)
+		arrCmd := strings.Split(command, " ")
+
+		// exit cmd
+		if  (len(arrCmd) > 0 && arrCmd[0] == "exit") {
+			os.Exit(0)
+		}
 		fmt.Println(command + ": command not found")
 	}
 }
