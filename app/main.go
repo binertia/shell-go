@@ -10,6 +10,54 @@ import (
 
 var _ = fmt.Print
 
+
+func inputSplit(input string) []string {
+	var result []string
+	var current strings.Builder
+
+	inSingle := false
+	inDouble := false
+
+	for _, ch := range input {
+
+		switch ch {
+
+		case '\'':
+			if !inDouble {
+				inSingle = !inSingle
+				continue
+			}
+
+		case '"':
+			if !inSingle {
+				inDouble = !inDouble
+				continue
+			}
+
+		case ' ':
+			if !inSingle && !inDouble {
+
+				if current.Len() > 0 {
+					result = append(result, current.String())
+					current.Reset()
+				}
+
+				continue
+			}
+		}
+
+		current.WriteRune(ch)
+	}
+
+	if current.Len() > 0 {
+		result = append(result, current.String())
+	}
+
+	return result
+}
+
+
+
 func handleExecBin(arrCmd []string, command string) {
 	// ::TODO:: will use this line below after finish for absolute path
 	// path, err := exec.LookPath(arrCmd[0])
@@ -138,7 +186,7 @@ func main() {
 		} 
 
 		command = strings.TrimSpace(command)
-		arrCmd := strings.Fields(command)
+		arrCmd := inputSplit(command)
 
 		if len(arrCmd) > 0 {
 			// exit cmd
