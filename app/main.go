@@ -10,6 +10,20 @@ import (
 
 var _ = fmt.Print
 
+func handleExecBin(arrCmd []string, command string) {
+	path, err := exec.LookPath(arrCmd[0])
+	if err != nil {
+		fmt.Println(command + ": command not found")
+	} else {
+		cmd := exec.Command(path,arrCmd[1:]...)
+		cmd.Stderr = os.Stderr
+		err = cmd.Run()
+		if err != nil {
+			fmt.Println(err)
+		}
+	}
+}
+
 
 func handleCommand(arrCmd []string, command string) {
 	switch arrCmd[0] {
@@ -22,7 +36,7 @@ func handleCommand(arrCmd []string, command string) {
 		handleType(arrCmd)
 
 	default:
-		fmt.Println(command + ": command not found")
+		handleExecBin(arrCmd, command)
 	}
 }
 
