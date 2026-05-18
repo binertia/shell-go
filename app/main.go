@@ -68,7 +68,7 @@ func handleType(arrCmd []string) {
 		return
 	}
 
-	var builtinCmd = []string{"echo","exit","type"}
+	var builtinCmd = []string{"echo","exit","type", "pwd"}
 	for _, s1 := range arrCmd[1:] {
 		indicator := 0;
 		for _, s2 := range builtinCmd {
