@@ -41,9 +41,25 @@ func handleCommand(arrCmd []string, command string) {
 	//type cmd
 	case "type":
 		handleType(arrCmd)
+	
+	//pwd cmd
+	case "pwd":
+		handlePwd(arrCmd)
 
 	default:
 		handleExecBin(arrCmd, command)
+	}
+}
+
+func handlePwd(arrCmd []string) {
+	if len(arrCmd) > 1 {
+		fmt.Println("pwd: too many arguments")
+	}
+	dir, err := os.Getwd()
+	if err != nil {
+		fmt.Println(err);
+	} else {
+		fmt.Println(dir);
 	}
 }
 
