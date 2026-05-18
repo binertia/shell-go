@@ -9,14 +9,47 @@ import (
 
 var _ = fmt.Print
 
+
 func handleCommand(arrCmd []string, command string) {
-	// exit cmd
-	if arrCmd[0] == "echo" {
+	switch arrCmd[0] {
+	//echo cmd
+	case "echo":
+		handleEcho(arrCmd)
 
-		if len(arrCmd) == 1 {
-			fmt.Println("")
+	//type cmd
+	case "type":
+		handleType(arrCmd, command)
+
+	default:
+		fmt.Println(command + ": command not found")
+	}
+}
+
+func handleType(arrCmd []string, command string) {
+	if len(arrCmd) == 1 {
+		return
+	}
+
+	var totalCmd = []string{"echo","exit","type"}
+	for _, s1 := range arrCmd[1:] {
+		indicator := 0;
+		for _, s2 := range totalCmd {
+			if s1 == s2 {
+				fmt.Println(s1 + " is a shell buildin")
+				indicator++;
+			}
+
 		}
+		if (indicator == 0) {
+			fmt.Println(s1 + ": not found")
+		}
+	}
+}
 
+func handleEcho(arrCmd []string) {
+	if len(arrCmd) == 1 {
+		fmt.Println("")
+	} else {
 		arrLen := len(arrCmd)
 
 		for i := 1; i < arrLen; i++ {
@@ -26,9 +59,6 @@ func handleCommand(arrCmd []string, command string) {
 				fmt.Print(arrCmd[i] + " ")
 			}
 		}
-
-	} else {
-		fmt.Println(command + ": command not found")
 	}
 }
 
@@ -46,6 +76,7 @@ func main() {
 		arrCmd := strings.Fields(command)
 
 		if len(arrCmd) > 0 {
+			// exit cmd
 			if arrCmd[0] == "exit" {
 				break
 			}
